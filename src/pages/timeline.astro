@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { timeline } from '../data/timeline';
+import { withBase } from '../../site.config.mjs';
+---
+<BaseLayout title="时间线">
+  <header class="page-heading"><p class="eyebrow">THROUGH THE YEARS</p><h1>时间线 <span lang="en">Timeline</span></h1><p>把散落的片段，放回时间里。</p></header>
+  <ol class="life-timeline">
+    {timeline.map((entry) => <li id={`year-${entry.year}`}><span class="timeline-year">{entry.year}</span><div class="timeline-entry"><h2>{entry.title}</h2>{entry.description && <p>{entry.description}</p>}{entry.href && <a class="text-link" href={withBase(entry.href)}>读这一年的故事 <span aria-hidden="true">→</span></a>}</div></li>)}
+  </ol>
+  <p class="timeline-postscript">未完，待续。</p>
+</BaseLayout>

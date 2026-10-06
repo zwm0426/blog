@@ -1,0 +1,29 @@
+---
+import { type Story, groupByYear, storyUrl, dateLabel } from '../lib/stories';
+import { withBase } from '../../site.config.mjs';
+interface Props { stories: Story[]; }
+const { stories } = Astro.props;
+---
+<div class="story-archive">
+  {groupByYear(stories).map(([year, entries]) => (
+    <section class="archive-year" aria-labelledby={`year-${year}`}>
+      <h3 id={`year-${year}`} class="year-label">{year}<span>{String(entries.length).padStart(2, '0')} 篇</span></h3>
+      <ol class="story-list">
+        {entries.map((story) => (
+          <li>
+            <a class="story-row" href={storyUrl(story)}>
+              <div class="story-copy">
+                <time datetime={story.data.date.toISOString()}>{dateLabel(story.data.date)}</time>
+                <h4>{story.data.title}{story.data.draft && <span class="draft-label">草稿</span>}</h4>
+                {story.data.description && <p>{story.data.description}</p>}
+              </div>
+              {story.data.cover && <img class="story-thumbnail" src={withBase(story.data.cover)} alt={story.data.coverAlt} loading="lazy" width="112" height="84" />}
+              <span class="story-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+  {stories.length === 0 && <p class="empty-note">故事还在路上。先留一页空白。</p>}
+</div>

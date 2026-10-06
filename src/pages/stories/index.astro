@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StoryArchive from '../../components/StoryArchive.astro';
+import { getStories } from '../../lib/stories';
+const stories = await getStories();
+---
+<BaseLayout title="故事">
+  <header class="page-heading"><p class="eyebrow">THE ARCHIVE</p><h1>故事 <span lang="en">Stories</span></h1><p>一些经历，一些回忆。按时间，慢慢收藏。</p></header>
+  <div class="section-heading archive-heading"><h2>所有故事</h2><span class="section-note">{String(stories.length).padStart(2, '0')} 篇记录</span></div>
+  <StoryArchive stories={stories} />
+</BaseLayout>
