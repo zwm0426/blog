@@ -1,0 +1,17 @@
+---
+import { type Story, numericDate, storyDateLabel, storyUrl } from '../lib/stories';
+
+interface Props { stories: Story[]; }
+const { stories } = Astro.props;
+---
+<ol class="recent-list">
+  {stories.map((story) => (
+    <li>
+      <a href={storyUrl(story)}>
+        <time datetime={story.data.publishedAt.toISOString()}>{numericDate(story.data.publishedAt)}</time>
+        <span class="recent-title">{story.data.title}</span>
+        <span class="recent-story-time">故事发生于 {storyDateLabel(story)}</span>
+      </a>
+    </li>
+  ))}
+</ol>

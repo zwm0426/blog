@@ -1,8 +1,10 @@
 ---
 title: "第一次搬到新加坡"
-date: 2017-08-01
+storyDate: 2017-08-01
+storyDateLabel: "Summer 2017"
+writtenAt: 2026-10-07
+publishedAt: 2026-10-07
 description: "关于一个新的地方，和一次新的开始。"
-year: 2017
 draft: false
 tags:
   - places

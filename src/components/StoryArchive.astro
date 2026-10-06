@@ -1,5 +1,5 @@
 ---
-import { type Story, groupByYear, storyUrl, dateLabel } from '../lib/stories';
+import { type Story, groupByYear, storyUrl, numericDate, storyDateLabel } from '../lib/stories';
 import { withBase } from '../../site.config.mjs';
 interface Props { stories: Story[]; }
 const { stories } = Astro.props;
@@ -13,9 +13,13 @@ const { stories } = Astro.props;
           <li>
             <a class="story-row" href={storyUrl(story)}>
               <div class="story-copy">
-                <time datetime={story.data.date.toISOString()}>{dateLabel(story.data.date)}</time>
+                <div class="story-list-meta">
+                  <time class="story-time" datetime={story.data.storyDate.toISOString()}>{storyDateLabel(story)}</time>
+                  {story.data.location && <span>{story.data.location}</span>}
+                </div>
                 <h4>{story.data.title}{story.data.draft && <span class="draft-label">草稿</span>}</h4>
                 {story.data.description && <p>{story.data.description}</p>}
+                <time class="written-time" datetime={story.data.writtenAt.toISOString()}>写于 {numericDate(story.data.writtenAt)}</time>
               </div>
               {story.data.cover && <img class="story-thumbnail" src={withBase(story.data.cover)} alt={story.data.coverAlt} loading="lazy" width="112" height="84" />}
               <span class="story-arrow" aria-hidden="true">→</span>

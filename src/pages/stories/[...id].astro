@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getStories, storyUrl, dateLabel, type Story } from '../../lib/stories';
+import { chineseDate, getStories, storyDateLabel, storyUrl, type Story } from '../../lib/stories';
 import { withBase } from '../../../site.config.mjs';
 
 export async function getStaticPaths() {
@@ -15,12 +15,15 @@ interface Props { story: Story; newer?: Story; older?: Story; }
 const { story, newer, older } = Astro.props;
 const { Content } = await render(story);
 ---
-<BaseLayout title={story.data.title} description={story.data.description} type="article" image={story.data.cover} published={story.data.date} draft={story.data.draft}>
+<BaseLayout title={story.data.title} description={story.data.description} type="article" image={story.data.cover} published={story.data.publishedAt} modified={story.data.updatedAt} draft={story.data.draft}>
   <article class="article">
     <header class="article-heading">
       <a class="eyebrow article-kicker" href={withBase('/stories/')}>STORIES <span aria-hidden="true">/</span> 故事</a>
       <h1>{story.data.title}</h1>
-      <div class="article-meta"><time datetime={story.data.date.toISOString()}>{dateLabel(story.data.date)}</time>{story.data.draft && <span class="draft-label">草稿 · 仅本地可见</span>}</div>
+      <div class="article-meta">
+        <div class="story-context"><time datetime={story.data.storyDate.toISOString()}>{storyDateLabel(story)}</time>{story.data.location && <span>{story.data.location}</span>}</div>
+        <div class="writing-context"><span>写于 <time datetime={story.data.writtenAt.toISOString()}>{chineseDate(story.data.writtenAt)}</time></span>{story.data.updatedAt && <span>更新于 <time datetime={story.data.updatedAt.toISOString()}>{chineseDate(story.data.updatedAt)}</time></span>}{story.data.draft && <span class="draft-label">草稿 · 仅本地可见</span>}</div>
+      </div>
       {story.data.description && <p class="article-description">{story.data.description}</p>}
     </header>
     {story.data.cover && <figure class="article-cover"><img src={withBase(story.data.cover)} alt={story.data.coverAlt} fetchpriority="high" />{story.data.coverCaption && <figcaption>{story.data.coverCaption}</figcaption>}</figure>}

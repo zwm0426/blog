@@ -30,9 +30,13 @@ npm run preview # 预览 production build，不显示草稿
 ```md
 ---
 title: "一台科学计算器的故事"
-date: 2026-01-03
+storyDate: 2004-01-01
+storyDateLabel: "2004 → 2026"
+writtenAt: 2026-10-07
+publishedAt: 2026-10-07
+# updatedAt: 2026-10-10
+# location: "西安 / New York"
 description: "关于一台计算器，以及一些小时候的事。"
-year: 2026
 # cover: "/images/calculator.jpg"
 # coverAlt: "放在书桌上的科学计算器"
 # coverCaption: "为照片写一句说明。"
@@ -51,7 +55,15 @@ tags:
 > 一句想记住的话。
 ```
 
-只有 `title` 和 `date` 必填。`year` 是归档年份，不填时取 `date` 年份；可用于把后来写的回忆放到它发生的年份。文章在各年份内按 `date` 倒序排列。`draft` 默认为 `false`，`tags` 默认为空。
+`title`、`storyDate`、`writtenAt` 和 `publishedAt` 必填：
+
+- `storyDate` 是故事发生的机器可读日期，决定生命档案中的年份和顺序。只知道年份时可写该年的 `01-01`，再用 `storyDateLabel` 显示更准确的人类表述。
+- `storyDateLabel` 可选，例如 `2004`、`2004 → 2026` 或 `Summer 2017`。省略时显示完整的 `storyDate`。
+- `writtenAt` 是文章写成的日期，文章页会显示“写于……”。
+- `publishedAt` 决定首页“最近写下”和 RSS 的排序及时间。
+- `updatedAt` 和 `location` 可选；有更新日期时文章页会显示“更新于……”，地点与故事时间并列展示。
+
+主 Stories 档案始终按 `storyDate` 倒序并按其年份分组；“最近写下”只是按 `publishedAt` 提供的辅助入口。`draft` 默认为 `false`，`tags` 默认为空。
 
 `draft: true` 在 `npm run dev` 下带草稿标记预览；production build 不会生成该文章页面，也不会出现在首页、Stories、相邻文章导航、RSS 或 sitemap 中。准备好发表时改为 `draft: false`。**草稿仍是仓库文件；公开仓库里的 Markdown 可以被别人读取。**
 
@@ -71,6 +83,15 @@ tags:
 
 ```html
 <figure>
+  <img src="/images/calculator.jpg" alt="放在书桌上的计算器" loading="lazy" />
+ <figcaption>这张照片的说明。</figcaption>
+</figure>
+```
+
+文章正文保持适合中文阅读的窄栏。需要让某张图延伸到更宽的版心时，在 `figure` 上添加 `class="wide"`：
+
+```html
+<figure class="wide">
   <img src="/images/calculator.jpg" alt="放在书桌上的计算器" loading="lazy" />
   <figcaption>这张照片的说明。</figcaption>
 </figure>

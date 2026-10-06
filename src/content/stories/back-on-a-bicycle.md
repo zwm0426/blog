@@ -1,8 +1,9 @@
 ---
 title: "我为什么又开始骑自行车了"
-date: 2026-04-26
+storyDate: 2026-04-26
+writtenAt: 2026-10-07
+publishedAt: 2026-10-07
 description: "关于重新骑上自行车这件小事。"
-year: 2026
 draft: false
 tags:
   - everyday
